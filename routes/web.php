@@ -16,10 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::controller(ProductTypesController::class)
-    ->prefix('product_type.')
-    ->name('product_type.')
+    ->prefix('product-type')
+    ->name('product-type.')
     ->group(function () {
        Route::get('/', 'index',)->name('list-product-types');
+
+       Route::post('/create', 'store',)->name('store-product-types');
     });
 
 Route::get('/', function () {

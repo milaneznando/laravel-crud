@@ -6,7 +6,7 @@ use App\Models\ProductType;
 use App\Support\Http\Requests\BaseRequest;
 use Illuminate\Validation\Rule;
 
-class ProductTypeListRequest extends BaseRequest
+class ProductTypeStoreRequest extends BaseRequest
 {
     /**
      * Request rules
@@ -16,7 +16,7 @@ class ProductTypeListRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'required', 'string']
+            'name' => ['required', 'string']
         ];
     }
 }

@@ -4,6 +4,13 @@ namespace App\Models;
 
 class ProductType extends BaseModel
 {
+    /**
+     * Define the table name
+     *
+     * @var string
+     */
+    protected $table = 'product_type';
+
     /** Primary key attribute
      * @var string
      */
