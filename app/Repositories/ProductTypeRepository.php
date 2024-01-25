@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\ProductType;
 use App\Support\Repository\BaseRepository;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 
@@ -17,6 +18,12 @@ class ProductTypeRepository extends BaseRepository
         return ProductType::class;
     }
 
+    /**
+     * List existing records
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Pagination\Paginator
+     */
     public function list(Request $request): Paginator
     {
         $query = $this->entity;
@@ -32,9 +39,9 @@ class ProductTypeRepository extends BaseRepository
      * Store a new register
      *
      * @param array $data
-     * @return \App\Models\ProductType
+     * @return \Illuminate\Database\Eloquent\Model
      */
-    public function save(array $data): ProductType
+    public function save(array $data): Model
     {
         $productType = $this->entity;
 

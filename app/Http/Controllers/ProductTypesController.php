@@ -22,6 +22,8 @@ class ProductTypesController extends BaseController
     }
 
     /**
+     * List existing records
+     *
      * @param \App\Http\Requests\ProductTypeListRequest $request
      * @return \Illuminate\Http\Resources\Json\ResourceCollection
      */
@@ -33,6 +35,8 @@ class ProductTypesController extends BaseController
     }
 
     /**
+     * Store a new record
+     *
      * @param \App\Http\Requests\ProductTypeStoreRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
