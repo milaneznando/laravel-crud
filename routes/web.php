@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductTypesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
+Route::controller(ProductTypesController::class)
+    ->prefix('product_type.')
+    ->name('product_type.')
+    ->group(function () {
+       Route::get('/', 'index',)->name('list-product-types');
+    });
 
 Route::get('/', function () {
     return view('welcome');
