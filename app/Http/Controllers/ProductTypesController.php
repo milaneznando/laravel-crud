@@ -64,9 +64,21 @@ class ProductTypesController extends BaseController
         return new ProductTypeResource($productType);
     }
 
+    /**
+     * Update and specific product type
+     *
+     * @param \App\Models\ProductType $productType
+     * @param \App\Http\Requests\ProductTypeUpdateRequest $request
+     * @return \App\Http\Resources\ProductTypeResource|\Illuminate\Http\JsonResponse
+     */
     public function update(ProductType $productType, ProductTypeUpdateRequest $request): ProductTypeResource|JsonResponse
     {
         try{
+            /**
+             * Here we do not need to create a new update method inside the ProductTypeRepository
+             * because it extends from BaseRepository which already has an update method.
+             * That's why I am passing an array of objects and the model as a parameter
+             */
             $updatedProductType = DB::transaction(fn () => $this->service->update($request->data(), $productType));
 
             return (new ProductTypeResource($updatedProductType))
