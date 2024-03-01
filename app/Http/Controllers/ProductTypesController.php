@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductTypeListRequest;
 use App\Http\Requests\ProductTypeStoreRequest;
+use App\Http\Requests\ProductTypeUpdateRequest;
 use App\Http\Resources\ProductTypeListResource;
+use App\Http\Resources\ProductTypeResource;
+use App\Models\ProductType;
 use App\Services\ProductTypeService;
 use App\Support\Http\Controllers\BaseController;
+use Mockery\Exception;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -47,5 +51,30 @@ class ProductTypesController extends BaseController
         return (new ProductTypeListResource($savedProductType))
             ->response()
             ->setStatusCode(HttpResponse::HTTP_CREATED);
+    }
+
+    /**
+     * Returns specified product type
+     *
+     * @param \App\Models\ProductType $productType
+     * @return \App\Http\Resources\ProductTypeResource
+     */
+    public function show(ProductType $productType): ProductTypeResource
+    {
+        return new ProductTypeResource($productType);
+    }
+
+    public function update(ProductType $productType, ProductTypeUpdateRequest $request): ProductTypeResource|JsonResponse
+    {
+        try{
+            $updatedProductType = DB::transaction(fn () => $this->service->update($request->data(), $productType));
+
+            return (new ProductTypeResource($updatedProductType))
+                ->response()
+                ->setStatusCode(HttpResponse::HTTP_CREATED);
+
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 }

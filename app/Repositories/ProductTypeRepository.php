@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Requests\ProductTypeUpdateRequest;
 use App\Models\ProductType;
 use App\Support\Repository\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
@@ -50,4 +51,9 @@ class ProductTypeRepository extends BaseRepository
 
         return $productType;
     }
+
+//    public function update(array $data, ProductType|Model|int $type): Model
+//    {
+//        $a = $request;
+//    }
 }

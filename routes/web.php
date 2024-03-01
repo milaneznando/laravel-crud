@@ -20,6 +20,8 @@ Route::controller(ProductTypesController::class)
     ->name('product-type.')
     ->group(function () {
        Route::get('/', 'index',)->name('list-product-types');
+       Route::get('/{productType}', 'show')->name('show-product-type');
+       Route::put('/{productType}', 'update')->name('update-product-type');
 
        Route::post('/create', 'store',)->name('store-product-types');
     });

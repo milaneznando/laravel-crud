@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-class ProductType extends BaseModel
+class Product extends BaseModel
 {
     /**
      * Define the table name
      *
      * @var string
      */
-    protected $table = 'product_type';
+    protected $table = 'product';
 
     /** Primary key attribute
      * @var string
@@ -20,6 +20,8 @@ class ProductType extends BaseModel
      * @var string[]
      */
     protected $fillable = [
-        'product_type_name'
+        'product_type_id',
+        'product_name',
+        'product_price',
     ];
 }
