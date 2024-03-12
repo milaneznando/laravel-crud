@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProductTypesController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,17 @@ Route::controller(ProductTypesController::class)
        Route::put('/{productType}', 'update')->name('update-product-type');
 
        Route::post('/create', 'store',)->name('store-product-types');
+    });
+
+Route::controller(ProductsController::class)
+    ->prefix('product')
+    ->name('product.')
+    ->group(function () {
+        Route::get('/', 'index',)->name('list-products');
+        Route::get('/{product}', 'show')->name('show-product');
+        Route::put('/{product}', 'update')->name('update-product');
+
+        Route::post('/create', 'store',)->name('store-product');
     });
 
 Route::get('/', function () {

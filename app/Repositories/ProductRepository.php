@@ -27,11 +27,19 @@ class ProductRepository extends BaseRepository
     public function list(Request $request): Paginator
     {
         $query = $this->entity;
+        $selectArray = [
+            'product.product_name',
+            'product.product_price',
+            'product_type.product_type_name'
+        ];
 
         if($request['product_name']):
-            return $query->where('product_name', 'like', '%' . $request["product_name"] . '%')->simplePaginate(perPage: 10);
+            return $query->select($selectArray)
+                ->join('product_type', 'product.product_type_id', '=', 'product_type.id')
+                ->where('product_name', 'like', '%' . $request["product_name"] . '%')->simplePaginate(perPage: 10);
+
         else:
-            return $query->simplePaginate(perPage: 10);
+            return $query->join('product_type', 'product.product_type_id', '=', 'product_type.id')->simplePaginate(perPage: 10);
         endif;
     }
 
@@ -45,7 +53,9 @@ class ProductRepository extends BaseRepository
     {
         $productType = $this->entity;
 
-        $productType->product_type_name = $data['name'];
+        $productType->product_type_id = $data['product_type_id'];
+        $productType->product_name = $data['product_name'];
+        $productType->product_price = $data['product_price'];
         $productType->save();
 
         return $productType;

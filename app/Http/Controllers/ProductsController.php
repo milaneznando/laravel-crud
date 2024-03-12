@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductListRequest;
-use App\Http\Requests\ProductTypeStoreRequest;
-use App\Http\Requests\ProductTypeUpdateRequest;
-use App\Http\Resources\ProductListResource;
-use App\Http\Resources\ProductTypeListResource;
-use App\Http\Resources\ProductTypeResource;
-use App\Models\ProductType;
+use App\Http\{Requests\ProductListRequest,
+    Requests\ProductStoreRequest,
+    Requests\ProductUpdateRequest,
+    Resources\ProductListResource,
+    Resources\ProductResource,
+};
+use Illuminate\{
+    Http\JsonResponse,
+    Http\Resources\Json\ResourceCollection,
+    Support\Facades\DB
+};
+use App\Models\Product;
 use App\Services\ProductService;
 use App\Support\Http\Controllers\BaseController;
 use Mockery\Exception;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\DB;
 
 class ProductsController extends BaseController
 {
@@ -40,14 +42,14 @@ class ProductsController extends BaseController
     /**
      * Store a new record
      *
-     * @param \App\Http\Requests\ProductTypeStoreRequest $request
+     * @param \App\Http\Requests\ProductStoreRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(ProductTypeStoreRequest $request): JsonResponse
+    public function store(ProductStoreRequest $request): JsonResponse
     {
-        $savedProductType = DB::transactpubfion(fn () => $this->service->save($request->validated()));
+        $savedProduct = DB::transaction(fn () => $this->service->save($request->validated()));
 
-        return (new ProductTypeListResource($savedProductType))
+        return (new ProductListResource($savedProduct))
             ->response()
             ->setStatusCode(HttpResponse::HTTP_CREATED);
     }
@@ -55,22 +57,23 @@ class ProductsController extends BaseController
     /**
      * Returns specified product type
      *
-     * @param \App\Models\ProductType $productType
-     * @return \App\Http\Resources\ProductTypeResource
+     * @param \App\Models\Product $product
+     * @return \App\Http\Resources\ProductResource
      */
-    public function show(ProductType $productType): ProductTypeResource
+    public function show(Product $product): ProductResource
     {
-        return new ProductTypeResource($productType);
+        return new ProductResource($product);
     }
 
     /**
-     * Update and specific product type
+     *  Update and specific product type
      *
-     * @param \App\Models\ProductType $productType
-     * @param \App\Http\Requests\ProductTypeUpdateRequest $request
-     * @return \App\Http\Resources\ProductTypeResource|\Illuminate\Http\JsonResponse
+     * @param \App\Models\Product $product
+     * @param \App\Http\Requests\ProductUpdateRequest $request
+     * @return \App\Http\Resources\ProductResource|\Illuminate\Http\JsonResponse
      */
-    public function update(ProductType $productType, ProductTypeUpdateRequest $request): ProductTypeResource|JsonResponse
+
+    public function update(Product $product, ProductUpdateRequest $request): ProductResource|JsonResponse
     {
         try{
             /**
@@ -78,9 +81,9 @@ class ProductsController extends BaseController
              * because it extends from BaseRepository which already has an update method.
              * That's why I am passing an array of objects and the model as a parameter
              */
-            $updatedProductType = DB::transaction(fn () => $this->service->update($request->data(), $productType));
+            $updatedProduct = DB::transaction(fn () => $this->service->update($request->data(), $product));
 
-            return (new ProductTypeResource($updatedProductType))
+            return (new ProductResource($updatedProduct))
                 ->response()
                 ->setStatusCode(HttpResponse::HTTP_CREATED);
 
