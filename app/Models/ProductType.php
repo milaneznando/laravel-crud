@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 class ProductType extends BaseModel
 {
     /**
@@ -22,4 +24,9 @@ class ProductType extends BaseModel
     protected $fillable = [
         'product_type_name'
     ];
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
 class Product extends BaseModel
 {
     /**
@@ -24,4 +26,14 @@ class Product extends BaseModel
         'product_name',
         'product_price',
     ];
+
+    /**
+     * Product Type relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function productType(): HasOne
+    {
+        return $this->hasOne(ProductType::class);
+    }
 }

@@ -2,21 +2,20 @@
 
 namespace App\Repositories;
 
-use App\Http\Requests\ProductTypeUpdateRequest;
-use App\Models\ProductType;
+use App\Models\Product;
 use App\Support\Repository\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 
-class ProductTypeRepository extends BaseRepository
+class ProductRepository extends BaseRepository
 {
     /**
      * @return string
      */
     public function modelClass(): string
     {
-        return ProductType::class;
+        return Product::class;
     }
 
     /**
@@ -29,8 +28,8 @@ class ProductTypeRepository extends BaseRepository
     {
         $query = $this->entity;
 
-        if($request['name']):
-            return $query->where('product_type_name', 'like', '%' . $request["name"] . '%')->simplePaginate(perPage: 10);
+        if($request['product_name']):
+            return $query->where('product_name', 'like', '%' . $request["product_name"] . '%')->simplePaginate(perPage: 10);
         else:
             return $query->simplePaginate(perPage: 10);
         endif;
