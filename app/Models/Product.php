@@ -23,6 +23,7 @@ class Product extends BaseModel
      */
     protected $fillable = [
         'product_type_id',
+        'manufacturer_id',
         'product_name',
         'product_price',
     ];
@@ -35,5 +36,15 @@ class Product extends BaseModel
     public function productType(): HasOne
     {
         return $this->hasOne(ProductType::class);
+    }
+
+    /**
+     * Manufacturers relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function manufacturer(): HasOne
+    {
+        return $this->hasOne(Manufacturer::class);
     }
 }

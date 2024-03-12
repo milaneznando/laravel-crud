@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Manufacturer;
 use App\Models\ProductType;
 use App\Support\Http\Requests\BaseRequest;
 use Illuminate\Validation\Rule;
@@ -17,6 +18,7 @@ class ProductUpdateRequest extends BaseRequest
     {
         return [
             'product_type_id' => ['sometimes', 'required', Rule::exists(ProductType::class, 'id')],
+            'manufacturer_id' => ['sometimes', 'required', Rule::exists(Manufacturer::class, 'id')],
             'product_name' => ['sometimes', 'required', 'string'],
             'product_price' => ['sometimes', 'required', 'numeric', 'gt:0']
         ];

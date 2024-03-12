@@ -18,6 +18,7 @@ class ProductListResource extends JsonResource
             'product_id' => $this->resource->id,
             'product_name' => $this->resource->product_name,
             'product_type_name' => $this->resource->product_type_name,
+            'manufacturer_name' => $this->resource->manufacturer_name,
             'product_price' => $this->resource->product_price,
             'created_at' => $this->resource->created_at,
             'updated_at' => $this->resource->updated_at,

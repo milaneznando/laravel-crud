@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProductsController;
-use App\Http\Controllers\ProductTypesController;
+use App\Http\Controllers\{
+    ManufacturersController,
+    ProductsController,
+    ProductTypesController
+};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +39,16 @@ Route::controller(ProductsController::class)
         Route::put('/{product}', 'update')->name('update-product');
 
         Route::post('/create', 'store',)->name('store-product');
+    });
+
+Route::controller(ManufacturersController::class)
+    ->prefix('manufacturer')
+    ->name('manufacturer.')
+    ->group(function () {
+        Route::get('/', 'index',)->name('list-manufacturers');
+        Route::get('/{manufacturer}', 'show')->name('show-manufacturer');
+
+        Route::post('/create', 'store',)->name('store-manufacturer');
     });
 
 Route::get('/', function () {
